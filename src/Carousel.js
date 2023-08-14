@@ -30,12 +30,14 @@ import Card from "./Card";
     setCurrCardIdx(currCardIdx - 1);
   }
 
+
   console.log(currCard.caption);
   return (
     <div className="Carousel">
       <h1>{title}</h1>
       <div className="Carousel-main">
-        <i
+        <i id="leftArrow"
+          style={currCardIdx === 0 ? {display: "none"} : {display: "inline"}}
           className="bi bi-arrow-left-circle"
           onClick={goBackward}
         />
@@ -45,7 +47,8 @@ import Card from "./Card";
           currNum={currCardIdx + 1}
           totalNum={total}
         />
-        <i
+        <i id="rightArrow"
+          style={currCardIdx === (total - 1) ? {display: "none"} : {display: "inline"}}
           className="bi bi-arrow-right-circle"
           onClick={goForward}
         />

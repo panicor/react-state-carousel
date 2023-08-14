@@ -28,7 +28,7 @@ it("works when you click on the right arrow", function() {
   ).not.toBeInTheDocument();
 
   // move forward in the carousel
-  const rightArrow = container.querySelector(".bi-arrow-right-circle");
+  const rightArrow = container.querySelector("#rightArrow");
   fireEvent.click(rightArrow);
 
   // expect the second image to show, but not the first
@@ -56,14 +56,46 @@ it("works when you click on the left arrow", function() {
   ).not.toBeInTheDocument();
 
   // move forward in the carousel
-  const leftArrow = container.querySelector(".bi-arrow-left-circle");
+  const rightArrow = container.querySelector("#rightArrow");
+  fireEvent.click(rightArrow);
+  const leftArrow = container.querySelector("#leftArrow");
   fireEvent.click(leftArrow);
 
   // expect the second image to show, but not the first
   expect(
     container.querySelector('img[alt="testing image 1"]')
-  ).not.toBeInTheDocument();
+  ).toBeInTheDocument();
   expect(
     container.querySelector('img[alt="testing image 3"]')
-  ).toBeInTheDocument();
+  ).not.toBeInTheDocument();
 });
+
+it("hides left arrow when on first image", function() {
+  const { container } = render(
+    <Carousel
+      photos={TEST_IMAGES}
+      title="images for testing"
+    />
+  );
+  // expect the first image to show, but not the second
+  expect(
+  container.querySelector('#leftArrow')
+  ).toHaveStyle("display: none");
+})
+
+it("hides right arrow when on last image", function() {
+  const { container } = render(
+    <Carousel
+      photos={TEST_IMAGES}
+      title="images for testing"
+    />
+  );
+
+  const rightArrow = container.querySelector("#rightArrow");
+  fireEvent.click(rightArrow);
+  fireEvent.click(rightArrow);
+  // expect the first image to show, but not the second
+  expect(
+  container.querySelector('#rightArrow')).toHaveStyle("display: none");
+})
+
